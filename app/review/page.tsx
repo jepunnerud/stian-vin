@@ -26,7 +26,7 @@ export default function Page() {
     useEffect(() => {
         const fetchUser = async () => {
             const { data: userLoggedIn } = await supabase.auth.getUser();
-            if (!userLoggedIn) {
+            if (!userLoggedIn.user) {
                 router.push('/');
             } else {
                 setUser(userLoggedIn.user);
@@ -70,7 +70,7 @@ export default function Page() {
         setIsNewWine(false);
     };
 
-    const handleNewWineToggle = () => {
+    const handleNewWineToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedWine(null);
         setFormData({
             wineName: '',
@@ -80,7 +80,12 @@ export default function Page() {
             review: '',
         });
         setWineSearch('');
-        setIsNewWine(true);
+
+        if (e.target.checked) {
+            setIsNewWine(true);
+        } else {
+            setIsNewWine(false);
+        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -89,10 +94,6 @@ export default function Page() {
             ...prevState,
             [name]: value
         }));
-    };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0] || null;
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -319,7 +320,6 @@ export default function Page() {
                         id='image'
                         name='image'
                         accept='image/*'
-                        onChange={handleImageChange}
                         className='mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                         required
                     />
