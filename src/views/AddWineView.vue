@@ -169,12 +169,14 @@ const handleSubmit = async (e: Event) => {
           id="wineName"
           name="wineName"
           v-model.lazy.trim="formData.wineName"
+
           class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           required
         />
       </div>
 
       <div class="mb-4">
+
         <label htmlFor="year" class="block text-sm font-medium text-gray-700">
           Year:
         </label>
